@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepagina van Amsterstad Roleplay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+
+        /* Header styling */
+        header {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 9999;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #333;
+        }
+
+        /* Main content styling */
+        main {
+            padding-top: 120px;
+            text-align: center;
+            color: #fff;
+        }
+
+        /* Dropdown styling */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-top: 50px;
+        }
+
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .dropbtn:hover {
+            background-color: #45a049;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 4px;
+        }
+
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+            transition: background-color 0.2s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Logo styling */
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            z-index: 999;
+        }
+
+        /* Video background styling */
+        #video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            filter: brightness(60%); /* Donkerder maken zodat tekst beter leesbaar is */
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 18px;
+            }
+
+            .dropbtn {
+                font-size: 14px;
+                padding: 12px 16px;
+            }
+
+            .dropdown-content a {
+                font-size: 12px;
+                padding: 10px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="OIP.jpeg" alt="Logo" class="logo"> <!-- Vervang 'logo.png' door de naam van je logo -->
+        <h1>Welkom op onze website!</h1>
+    </header>
+    <main>
+        <div class="dropdown">
+            <button class="dropbtn">Selecteer een optie</button>
+            <div class="dropdown-content">
+                <a href="makelaar.html">Makelaar</a>
+                <a href="trainingen.html">trainingaanvraag</a>
+                <a href="doorverwijzing.html">KvK</a>
+                <a href="rechtbank.html">rechtbank</a>
+                <a href="solliciteren.html">Solliciteren</a>
+                <a href="documentmaken.html">Document maken</a>
+                <a href="doorverwijzingverz.html">verzekeringen</a>
+                <a href="staff.html">staff informatie</a>
+                <!--<a href="zoho.html">Zoho voor cliënten</a>
+                <a href="beheerzoho.html">Zoho voor Admin</a>
+                <a href="clientenportaal.html">Cliëntenportaal</a> -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Video's met geluid -->
+    <div id="video-container">
+        <video id="bg-video" autoplay loop muted>
+            <source src="video1.mp4" type="video/mp4">
+            <source src="video3.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <script>
+        // Array met de paden naar de video's
+        var videos = ["video1.mp4", "video3.mp4"];
+        
+        // Kies willekeurig een video uit de array
+        var randomVideo = videos[Math.floor(Math.random() * videos.length)];
+        
+        // Vervang de bron van de video
+        document.getElementById("bg-video").src = randomVideo;
+    </script>
+</body>
+</html>
