@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sollicitatieformulier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .home-button {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background-color: #ffffff;
+            color: #35424a;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .home-button:hover {
+            background-color: #45a049;
+            color: #ffffff;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input, textarea, select, button {
+            margin-top: 5px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sollicitatieformulier</h1>
+        <a href="staff.html" class="home-button">terug</a>
+    </header>
+    <div class="container">
+        <form id="sollicitatie-form">
+            <label for="functie">Functie</label>
+            <select id="functie" name="functie" required>
+                <!-- <option value="Staff Coördinator">Staff Coördinator</option>
+                <option value="Onderwereld Coördinator">Onderwereld Coördinator</option>
+                <option value="Hulpdiensten Coördinator">Hulpdiensten Coördinator</option> -->
+                <option value="Voorzitter Gemeenteraad">Voorzitter Gemeenteraad</option>
+                <!-- <option value="Ticket Coördinator">Ticket Coördinator</option> -->
+                <option value="Unban/Refund Coördinator">Unban/Refund Coördinator</option>
+            </select>
+
+            <label for="naam">Volledige naam</label>
+            <input type="text" id="naam" name="naam" placeholder="Jouw volledige naam" required>
+
+            <label for="discord">Discord-gebruikersnaam</label>
+            <input type="text" id="discord" name="discord" placeholder="Bijv. Gebruiker#1234" required>
+
+            <label for="ervaring">Ervaring</label>
+            <textarea id="ervaring" name="ervaring" rows="5" placeholder="Beschrijf je relevante ervaring" required></textarea>
+
+            <label for="motivatie">Motivatie</label>
+            <textarea id="motivatie" name="motivatie" rows="5" placeholder="Waarom wil je deze functie?" required></textarea>
+
+            <button type="submit">Verstuur Sollicitatie</button>
+        </form>
+    </div>
+    <footer>
+        <p>&copy; 2024 - Sollicitatieformulier | Neem contact op bij vragen.</p>
+    </footer>
+
+    <script>
+        // Webhook-URL van Discord
+        const webhookURL = "https://discord.com/api/webhooks/1314651433932689480/Lq5q7Mo6K5LKzPOO6CvYm6-q19Q1i8N1qX4DltzQfujC9cdIHF1wFwMxDcYgF_kAVSHF";
+
+        document.getElementById("sollicitatie-form").addEventListener("submit", async function(event) {
+            event.preventDefault(); // Voorkom standaardformulierverzending
+
+            // Haal formuliergegevens op
+            const functie = document.getElementById("functie").value;
+            const naam = document.getElementById("naam").value;
+            const discord = document.getElementById("discord").value;
+            const ervaring = document.getElementById("ervaring").value;
+            const motivatie = document.getElementById("motivatie").value;
+
+            // Embedbericht opstellen
+            const embed = {
+                title: "Nieuwe Sollicitatie Ontvangen",
+                color: 3066993, // Blauw
+                fields: [
+                    {
+                        name: "Functie",
+                        value: functie,
+                        inline: true
+                    },
+                    {
+                        name: "Naam",
+                        value: naam,
+                        inline: true
+                    },
+                    {
+                        name: "Discord Gebruiker",
+                        value: discord,
+                        inline: true
+                    },
+                    {
+                        name: "Ervaring",
+                        value: ervaring,
+                        inline: false
+                    },
+                    {
+                        name: "Motivatie",
+                        value: motivatie,
+                        inline: false
+                    }
+                ],
+                footer: {
+                    text: "Sollicitatie Systeem",
+                    icon_url: "https://i.imgur.com/AfFp7pu.png"
+                }
+            };
+
+            // JSON-payload voor de webhook
+            const payload = {
+                embeds: [embed]
+            };
+
+            // Verzenden naar Discord-webhook
+            try {
+                const response = await fetch(webhookURL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    alert("Sollicitatie succesvol verzonden!");
+                    document.getElementById("sollicitatie-form").reset(); // Formulier legen
+                } else {
+                    alert("Er ging iets mis bij het verzenden van de sollicitatie.");
+                }
+            } catch (error) {
+                alert("Er trad een fout op: " + error.message);
+            }
+        });
+    </script>
+</body>
+</html>

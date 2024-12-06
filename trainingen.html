@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainingaanvraag Overheid</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .home-button {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background-color: #ffffff;
+            color: #35424a;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .home-button:hover {
+            background-color: #45a049;
+            color: #ffffff;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .hidden {
+            display: none;
+        }
+        .warning {
+            color: red;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1></h1>
+        <a href="index.html" class="home-button">Home</a>
+    </header>
+    <h1>Trainingaanvraag Overheid</h1>
+
+    <div class="warning">
+        LET OP: Het invullen van dit formulier is bedoeld voor beambten die hiervoor gevraagd zijn. Het invullen zonder geldige reden kan leiden tot sancties.
+    </div>
+
+    <form id="trainingForm" onsubmit="submitForm(event)">
+        <label for="stamnummer">Stamnummer of Roepnummer</label>
+        <input type="text" id="stamnummer" name="stamnummer" required>
+
+        <label for="beroep">Beroep</label>
+        <select id="beroep" name="beroep" required onchange="showFormFields()">
+            <option value="">Selecteer je beroep</option>
+            <option value="politie">Politie</option>
+            <option value="kmar">Koninklijke Marechaussee</option>
+            <option value="ambulance">Ambulance</option>
+            <option value="pechhulp">Pechhulp</option>
+        </select>
+
+        <!-- Politie Fields -->
+        <div id="politieFields" class="hidden">
+            <label for="politieRang">Rang</label>
+            <select id="politieRang" name="politieRang">
+                <option value="Aspirant">Aspirant</option>
+                <option value="Surveillant">Surveillant</option>
+                <option value="Agent">Agent</option>
+                <option value="Hoofd-Agent">Hoofd-Agent</option>
+                <option value="Brigadier">Brigadier</option>
+                <option value="Inspecteur">Inspecteur</option>
+                <option value="Hoofd-Inspecteur">Hoofd-Inspecteur</option>
+            </select>
+
+            <label for="politieTraining">Aanvraag Training</label>
+            <select id="politieTraining" name="politieTraining">
+                <option value="IBT">IBT</option>
+                <option value="Off-Road">Off-Road</option>
+                <option value="OpCo">OpCo</option>
+                <option value="Onderhandelaar (NVT)">Onderhandelaar (NVT)</option>
+                <option value="Lichte Motor (NVT)">Lichte Motor (NVT)</option>
+                <option value="Zware Motor">Zware Motor</option>
+                <option value="OvD-P">OvD-P</option>
+                <option value="Team Verkeer (SIV)">Team Verkeer (SIV)</option>
+                <option value="OC (Operationeel Centrum)">OC (Operationeel Centrum)</option>
+                <option value="Unmarked (Vanaf Hoofd-Agent)">Unmarked (Vanaf Hoofd-Agent)</option>
+                <option value="Dienst Luchtvaart">Dienst Luchtvaart</option>
+            </select>
+        </div>
+
+        <!-- KMar Fields -->
+        <div id="kmarFields" class="hidden">
+            <label for="kmarRang">Rang</label>
+            <select id="kmarRang" name="kmarRang">
+                <option value="Wachtmeester">Wachtmeester</option>
+                <option value="OberWachtmeester">OberWachtmeester</option>
+                <option value="Adjudant">Adjudant</option>
+                <option value="Luitenant">Luitenant</option>
+            </select>
+
+            <label for="kmarTraining">Aanvraag Training</label>
+            <select id="kmarTraining" name="kmarTraining">
+                <option value="Geweertraining">Geweertraining</option>
+                <option value="Lichte Pantservoertuigen">Lichte Pantservoertuigen</option>
+                <option value="Grenstoezicht">Grenstoezicht</option>
+                <option value="Ondersteuning Politie">Ondersteuning Politie</option>
+            </select>
+        </div>
+
+        <!-- Ambulance Fields -->
+        <div id="ambulanceFields" class="hidden">
+            <label for="ambulanceRang">Rang</label>
+            <select id="ambulanceRang" name="ambulanceRang">
+                <option value="Paramedicus">Paramedicus</option>
+                <option value="Hoofd-Paramedicus">Hoofd-Paramedicus</option>
+                <option value="Trauma-arts">Trauma-arts</option>
+            </select>
+
+            <label for="ambulanceTraining">Aanvraag Training</label>
+            <select id="ambulanceTraining" name="ambulanceTraining">
+                <option value="Spoedtransport">Spoedtransport</option>
+                <option value="Advanced Life Support">Advanced Life Support</option>
+                <option value="Helikopteroperaties">Helikopteroperaties</option>
+            </select>
+        </div>
+
+        <!-- Pechhulp Fields -->
+        <div id="pechhulpFields" class="hidden">
+            <label for="pechhulpRang">Rang</label>
+            <select id="pechhulpRang" name="pechhulpRang">
+                <option value="Monteur">Monteur</option>
+                <option value="Hoofdmonteur">Hoofdmonteur</option>
+            </select>
+
+            <label for="pechhulpTraining">Aanvraag Training</label>
+            <select id="pechhulpTraining" name="pechhulpTraining">
+                <option value="Bergingsoperaties">Bergingsoperaties</option>
+                <option value="Wegassistentie">Wegassistentie</option>
+            </select>
+        </div>
+
+        <label for="trainingDatum">Gewenste Datum voor de Training</label>
+        <input type="date" id="trainingDatum" name="trainingDatum" required>
+
+        <label for="trainingTijd">Gewenste Tijd voor de Training</label>
+        <input type="time" id="trainingTijd" name="trainingTijd" required>
+
+        <button type="submit">Verzenden</button>
+    </form>
+
+    <script>
+        function showFormFields() {
+            document.getElementById('politieFields').classList.add('hidden');
+            document.getElementById('kmarFields').classList.add('hidden');
+            document.getElementById('ambulanceFields').classList.add('hidden');
+            document.getElementById('pechhulpFields').classList.add('hidden');
+
+            const selectedBeroep = document.getElementById('beroep').value;
+            if (selectedBeroep === 'politie') {
+                document.getElementById('politieFields').classList.remove('hidden');
+            } else if (selectedBeroep === 'kmar') {
+                document.getElementById('kmarFields').classList.remove('hidden');
+            } else if (selectedBeroep === 'ambulance') {
+                document.getElementById('ambulanceFields').classList.remove('hidden');
+            } else if (selectedBeroep === 'pechhulp') {
+                document.getElementById('pechhulpFields').classList.remove('hidden');
+            }
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+
+            const beroep = document.getElementById('beroep').value;
+            let webhookURL = '';
+            let discordID = ''; 
+
+            // Webhook URL's en Discord ID's voor de verschillende beroepen
+            if (beroep === 'politie') {
+                webhookURL = 'https://discord.com/api/webhooks/1289624665773576275/SAHRngi1gg_IBVC7H_smkKoUv3H3ytoRN-Ulr0hLRAXTFgd4XCgdDj2Rwip0PpjsMXbv';
+                discordID = '1281312886903406643'; // Rol-ID voor Politie
+            } else if (beroep === 'kmar') {
+                webhookURL = 'https://discord.com/api/webhooks/1289624665773576275/SAHRngi1gg_IBVC7H_smkKoUv3H3ytoRN-Ulr0hLRAXTFgd4XCgdDj2Rwip0PpjsMXbv';
+                discordID = '1281312886903406643'; // Rol-ID voor KMar
+            } else if (beroep === 'ambulance') {
+                webhookURL = 'https://discord.com/api/webhooks/1289625051611533352/9WDbPr1IEWVmE8GlYOwLjM9iCP-WcdW0N3YyXuqIjD9KFKhX2GQQwM50zwpuJGMgG-EE';
+                discordID = '1281313012245987389'; // Rol-ID voor Ambulance
+            } else if (beroep === 'pechhulp') {
+                webhookURL = 'https://discord.com/api/webhooks/1289625238946185368/naZVGxQ7NzfbMWIyP111oIJUL6-dHi1APA6IwytzuNe4vR7pS0WfeGDRVfeKWs6PxvpB';
+                discordID = '1288920404601077802'; // Rol-ID voor Pechhulp
+            }
+
+            // Hier worden de gegevens van het formulier verzameld
+            const formData = {
+                stamnummer: document.getElementById('stamnummer').value,
+                beroep: beroep,
+                trainingDatum: document.getElementById('trainingDatum').value,
+                trainingTijd: document.getElementById('trainingTijd').value
+            };
+
+            // Voeg beroep specifieke gegevens toe
+            if (beroep === 'politie') {
+                formData.rang = document.getElementById('politieRang').value;
+                formData.training = document.getElementById('politieTraining').value;
+            } else if (beroep === 'kmar') {
+                formData.rang = document.getElementById('kmarRang').value;
+                formData.training = document.getElementById('kmarTraining').value;
+            } else if (beroep === 'ambulance') {
+                formData.rang = document.getElementById('ambulanceRang').value;
+                formData.training = document.getElementById('ambulanceTraining').value;
+            } else if (beroep === 'pechhulp') {
+                formData.rang = document.getElementById('pechhulpRang').value;
+                formData.training = document.getElementById('pechhulpTraining').value;
+            }
+
+            // Stuur de gegevens naar de Discord-webhook
+            fetch(webhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    content: `Nieuwe trainingaanvraag:
+                    **Stamnummer:** ${formData.stamnummer}
+                    **Beroep:** ${formData.beroep}
+                    **Rang:** ${formData.rang}
+                    **Aanvraag Training:** ${formData.training}
+                    **Gewenste Datum:** ${formData.trainingDatum}
+                    **Gewenste Tijd:** ${formData.trainingTijd}`,
+                    embeds: [
+                        {
+                            title: "Trainingaanvraag Details",
+                            color: 16711680,
+                            fields: [
+                                {
+                                    name: "Rol ID",
+                                    value: discordID,
+                                    inline: true
+                                },
+                            ],
+                        },
+                    ],
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Trainingaanvraag succesvol verzonden!');
+                    document.getElementById('trainingForm').reset();
+                } else {
+                    alert('Er is een fout opgetreden bij het verzenden van de aanvraag.');
+                }
+            })
+            .catch(error => {
+                console.error('Fout:', error);
+                alert('Er is een fout opgetreden bij het verzenden van de aanvraag.');
+            });
+        }
+    </script>
+</body>
+</html>

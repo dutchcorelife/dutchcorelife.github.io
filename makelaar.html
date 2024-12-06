@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makelaar - Huizen en Huurhuizen</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #35424a;
+            color: #ffffff;
+            padding: 15px 0;
+            text-align: center;
+        }
+        .home-button {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background-color: #ffffff;
+            color: #35424a;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .home-button:hover {
+            background-color: #45a049;
+            color: #ffffff;
+        }
+        h1 {
+            margin: 0;
+            padding: 10px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .property-list, .rental-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        .property, .rental {
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+        }
+        .property:hover, .rental:hover {
+            transform: translateY(-10px);
+        }
+        .slider-container {
+            position: relative;
+            max-width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+        .slider-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .slider-container .slide {
+            display: none;
+        }
+        .slider-container .active {
+            display: block;
+        }
+        .slider-buttons {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+            transform: translateY(-50%);
+        }
+        .slider-buttons button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+        .property h2, .rental h2 {
+            margin-top: 0;
+            padding: 15px;
+            background-color: #f8f8f8;
+        }
+        .property p, .rental p {
+            padding: 0 15px;
+            color: #555;
+        }
+        .property .details, .rental .details {
+            padding: 15px;
+            background-color: #f0f0f0;
+        }
+        button {
+            background-color: #35424a;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .form-container {
+            display: none;
+            margin-top: 10px;
+        }
+        form {
+            margin-top: 10px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #35424a;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Makelaar - Huizen en Huurhuizen</h1>
+        <a href="index.html" class="home-button">Home</a>
+    </header>
+
+<div class="container">
+    <h2>Beschikbare Huizen</h2>
+    <div class="property-list" id="koopHuizenLijst">
+        <!-- Koop huizen worden hier automatisch gegenereerd -->
+    </div>
+
+    <h2>Beschikbare Huurhuizen</h2>
+    <div class="rental-list" id="huurHuizenLijst">
+        <!-- Huur huizen worden hier automatisch gegenereerd -->
+    </div>
+</div>
+
+<script>
+    // Voeg je Discord-webhook URL hier toe
+    const discordWebhookUrl = "https://discord.com/api/webhooks/1288933057104969779/d3-ncVyCWrUq3btT68V2I5nzmgNxpLWvJxSQwQiTEcm8yrEdBF1a-MuuzWjL604SPQU8";
+
+    // Gegevens voor koopwoningen en huurwoningen met meerdere afbeeldingen
+    const koopHuizen = [
+        {
+            titel: "Villa aan zee",
+            beschrijving: "Prachtige villa met uitzicht op zee.",
+            afbeeldingen: [
+                "https://cdn.discordapp.com/attachments/1289923023972995124/1289978354023530557/image.png?ex=66fac976&is=66f977f6&hm=a35edb7c0caf3a9ef2b3b3b122a922435d5b2e0fd0a2a95c58a3a23a3aec4626&",
+                "https://cdn.discordapp.com/attachments/1289923023972995124/1289978354023530557/image.png?ex=66fac976&is=66f977f6&hm=a35edb7c0caf3a9ef2b3b3b122a922435d5b2e0fd0a2a95c58a3a23a3aec4626&",
+                "https://cdn.discordapp.com/attachments/1289923023972995124/1289978354023530557/image.png?ex=66fac976&is=66f977f6&hm=a35edb7c0caf3a9ef2b3b3b122a922435d5b2e0fd0a2a95c58a3a23a3aec4626&"
+            ],
+            prijs: 1200000,
+            locatie: "Zeedijk 34, Rotterdam",
+            id: "villa1"
+        },
+        {
+            titel: "Luxe penthouse",
+            beschrijving: "Een modern penthouse in het hart van de stad.",
+            afbeeldingen: [
+                "https://via.placeholder.com/350x200/abcdef",
+                "https://via.placeholder.com/350x200/fedcba"
+            ],
+            prijs: 850000,
+            locatie: "Hoofdstraat 123, Amsterdam",
+            id: "penthouse1"
+        }
+    ];
+
+    const huurHuizen = [
+        {
+            titel: "Appartement in centrum",
+            beschrijving: "Modern appartement in het centrum.",
+            afbeeldingen: [
+                "https://cdn.discordapp.com/attachments/1288931427487973386/1288931608237441175/image.png?ex=66f6fa9a&is=66f5a91a&hm=30574e52188d31c7340d382daa69c4d3d4165921b641a49fe4d3a2c851300851&",
+                "https://cdn.discordapp.com/attachments/1288931427487973386/1288931438053556297/image.png?ex=66f6fa72&is=66f5a8f2&hm=a38202b1fde2dfccdab50ea343685dc892bb8726e5ea5fc9670d3fb9a982e0b8&"
+            ],
+            prijsPerWeek: 500,
+            locatie: "Bakerlaan 5, Utrecht",
+            id: "appartement1"
+        },
+        {
+            titel: "Gezellig huisje",
+            beschrijving: "Een knus huisje in een rustige buurt.",
+            afbeeldingen: [
+                "https://via.placeholder.com/350x200/112233",
+                "https://via.placeholder.com/350x200/334455",
+                "https://via.placeholder.com/350x200/556677"
+            ],
+            prijsPerWeek: 350,
+            locatie: "Bloemstraat 12, Den Haag",
+            id: "huisje1"
+        }
+    ];
+
+    // Functie om een slider te genereren voor meerdere afbeeldingen
+    function createSlider(images) {
+        const sliderContainer = document.createElement('div');
+        sliderContainer.classList.add('slider-container');
+
+        let slideIndex = 0;
+
+        const slides = images.map((src, index) => {
+            const slide = document.createElement('img');
+            slide.src = src;
+            slide.classList.add('slide');
+            if (index === 0) {
+                slide.classList.add('active');
+            }
+            sliderContainer.appendChild(slide);
+            return slide;
+        });
+
+        const sliderButtons = document.createElement('div');
+        sliderButtons.classList.add('slider-buttons');
+
+        const prevButton = document.createElement('button');
+        prevButton.textContent = "<";
+        prevButton.onclick = () => showSlides(-1);
+
+        const nextButton = document.createElement('button');
+        nextButton.textContent = ">";
+        nextButton.onclick = () => showSlides(1);
+
+        sliderButtons.appendChild(prevButton);
+        sliderButtons.appendChild(nextButton);
+        sliderContainer.appendChild(sliderButtons);
+
+        function showSlides(n) {
+            slideIndex += n;
+            if (slideIndex >= slides.length) {
+                slideIndex = 0;
+            }
+            if (slideIndex < 0) {
+                slideIndex = slides.length - 1;
+            }
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === slideIndex);
+            });
+        }
+
+        return sliderContainer;
+    }
+
+    // Functie om de huizen te genereren
+    function generatePropertyList(properties, containerId, isKoop) {
+        const container = document.getElementById(containerId);
+
+        properties.forEach(property => {
+            const propertyDiv = document.createElement('div');
+            propertyDiv.classList.add(isKoop ? 'property' : 'rental');
+
+            const slider = createSlider(property.afbeeldingen);
+
+            const propertyDetails = document.createElement('div');
+            propertyDetails.classList.add('details');
+
+            const propertyTitle = document.createElement('h2');
+            propertyTitle.textContent = property.titel;
+
+            const propertyDescription = document.createElement('p');
+            propertyDescription.textContent = property.beschrijving;
+
+            const propertyPrice = document.createElement('p');
+            propertyPrice.textContent = isKoop ? `Prijs: €${property.prijs}` : `Prijs per week: €${property.prijsPerWeek}`;
+
+            const propertyLocation = document.createElement('p');
+            propertyLocation.textContent = `Locatie: ${property.locatie}`;
+
+            const propertyId = document.createElement('p');
+            propertyId.textContent = `Huisnummer: ${property.id}`;
+
+            const button = document.createElement('button');
+            button.textContent = "Reageren";
+            button.onclick = () => toggleForm(property.id);
+
+            const formContainer = document.createElement('div');
+            formContainer.classList.add('form-container');
+            formContainer.id = property.id;
+
+            const form = document.createElement('form');
+            form.innerHTML = `
+                <label for="naam">Naam:</label>
+                <input type="text" id="naam-${property.id}" required>
+                <label for="achternaam">Achternaam:</label>
+                <input type="text" id="achternaam-${property.id}" required>
+                <label for="discord">Discord-naam:</label>
+                <input type="text" id="discord-${property.id}" required>
+                <label for="bod">Bod/bericht:</label>
+                <input type="text" id="bod-${property.id}" required>
+                <input type="submit" value="Verstuur">
+            `;
+            form.onsubmit = (e) => {
+                e.preventDefault();
+                const content = `
+                    Naam: ${document.getElementById(`naam-${property.id}`).value}
+                    Achternaam: ${document.getElementById(`achternaam-${property.id}`).value}
+                    Discord-naam: ${document.getElementById(`discord-${property.id}`).value}
+                    Bod/bericht: ${document.getElementById(`bod-${property.id}`).value}
+                    Huisnummer: ${property.id}
+                `;
+                sendToDiscord(discordWebhookUrl, content);
+                form.reset();
+                alert('Reactie verstuurd naar Discord!');
+            };
+
+            formContainer.appendChild(form);
+            propertyDetails.appendChild(propertyTitle);
+            propertyDetails.appendChild(propertyDescription);
+            propertyDetails.appendChild(propertyPrice);
+            propertyDetails.appendChild(propertyLocation);
+            propertyDetails.appendChild(propertyId);
+            propertyDetails.appendChild(button);
+            propertyDetails.appendChild(formContainer);
+
+            propertyDiv.appendChild(slider);
+            propertyDiv.appendChild(propertyDetails);
+
+            container.appendChild(propertyDiv);
+        });
+    }
+
+    // Functie om het formulier zichtbaar/inzichtbaar te maken
+    function toggleForm(propertyId) {
+        const form = document.getElementById(propertyId);
+        form.style.display = form.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Functie om berichten naar Discord te sturen
+    function sendToDiscord(webhookUrl, content) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", webhookUrl, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({ content }));
+    }
+
+    // Genereer de koopwoningen en huurwoningen
+    generatePropertyList(koopHuizen, 'koopHuizenLijst', true);
+    generatePropertyList(huurHuizen, 'huurHuizenLijst', false);
+
+</script>
+</body>
+</html>

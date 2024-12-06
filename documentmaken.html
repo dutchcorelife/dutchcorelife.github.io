@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy Invoer - Verhuurbedrijf</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        input[type="text"], input[type="email"], input[type="date"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .error {
+            color: red;
+        }
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>Vul uw Gegevens In voor Privacy Policy</h1>
+        <form id="data-form">
+            <label for="bedrijf">Naam van het Verhuurbedrijf:</label>
+            <input type="text" id="bedrijf" required>
+
+            <label for="naam">Volledige Naam:</label>
+            <input type="text" id="naam" required>
+
+            <label for="email">E-mailadres:</label>
+            <input type="email" id="email" required>
+
+            <label for="telefoon">Telefoonnummer:</label>
+            <input type="text" id="telefoon" required>
+
+            <label for="adres">Adres:</label>
+            <input type="text" id="adres" required>
+
+            <label for="geboortedatum">Geboortedatum:</label>
+            <input type="date" id="geboortedatum" required>
+
+            <label for="doel">Doel van Gegevensverzameling:</label>
+            <textarea id="doel" rows="4" required></textarea>
+
+            <label for="gegevensverwerking">Soorten Gegevens die Worden Verwerkt:</label>
+            <textarea id="gegevensverwerking" rows="4" required></textarea>
+
+            <label for="bewaarperiode">Bewaarperiode van Gegevens:</label>
+            <input type="text" id="bewaarperiode" required>
+
+            <label for="derde_partijen">Derde Partijen die Toegang Hebben tot Gegevens:</label>
+            <textarea id="derde_partijen" rows="4"></textarea>
+
+            <label for="rechten">Rechten van de Klanten:</label>
+            <textarea id="rechten" rows="4" required></textarea>
+
+            <label for="opmerkingen">Opmerkingen:</label>
+            <textarea id="opmerkingen" rows="4"></textarea>
+
+            <button type="submit">Download Privacy Policy</button>
+        </form>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        document.getElementById('data-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Voorkomt dat het formulier normaal wordt verzonden
+
+            // Haal de waarden uit de invoervelden
+            const bedrijf = document.getElementById('bedrijf').value;
+            const naam = document.getElementById('naam').value;
+            const email = document.getElementById('email').value;
+            const telefoon = document.getElementById('telefoon').value;
+            const adres = document.getElementById('adres').value;
+            const geboortedatum = document.getElementById('geboortedatum').value;
+            const doel = document.getElementById('doel').value;
+            const gegevensverwerking = document.getElementById('gegevensverwerking').value;
+            const bewaarperiode = document.getElementById('bewaarperiode').value;
+            const derde_partijen = document.getElementById('derde_partijen').value;
+            const rechten = document.getElementById('rechten').value;
+            const opmerkingen = document.getElementById('opmerkingen').value;
+
+            // Creëer de inhoud van de privacy policy met nettere opmaak
+            const fileContent = `
+            ===================================
+            Privacy Policy voor ${bedrijf}
+            ===================================
+
+            Volledige Naam: ${naam}
+            E-mailadres: ${email}
+            Telefoonnummer: ${telefoon}
+            Adres: ${adres}
+            Geboortedatum: ${geboortedatum}
+
+            Doel van Gegevensverzameling:
+            ${doel}
+
+            Soorten Gegevens die Worden Verwerkt:
+            ${gegevensverwerking}
+
+            Bewaarperiode van Gegevens:
+            ${bewaarperiode}
+
+            Derde Partijen die Toegang Hebben tot Gegevens:
+            ${derde_partijen ? derde_partijen : 'Geen derden betrokken.'}
+
+            Rechten van de Klanten:
+            ${rechten}
+
+            Opmerkingen:
+            ${opmerkingen ? opmerkingen : 'Geen opmerkingen.'}
+
+            ===================================
+            Dit document is een verklaring van de privacypraktijken van ${bedrijf} en is bedoeld om klanten te informeren over hoe hun gegevens worden verwerkt.
+            `.trim();
+
+            // Maak een blob van de inhoud
+            const blob = new Blob([fileContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'privacy_policy.txt'; // Naam van het te downloaden bestand
+            link.click(); // Simuleer een klik op de link om het downloaden te starten
+
+            // Toon een succesbericht
+            document.getElementById('message').innerHTML = "<p class='success'>Privacy policy succesvol aangemaakt en gedownload.</p>";
+        });
+    </script>
+</body>
+</html>

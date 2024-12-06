@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sollicitatieformulier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        .form-container input, .form-container select, .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .home-button {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background-color: #ffffff;
+            color: #35424a;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .home-button:hover {
+            background-color: #45a049;
+            color: #ffffff;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1></h1>
+        <a href="index.html" class="home-button">Home</a>
+    </header>
+    <div class="form-container">
+        <h2>Solliciteer voor een baan</h2>
+        <form id="jobApplicationForm">
+            <label for="name">Volledige naam</label>
+            <input type="text" id="name" name="name" required placeholder="Jouw naam...">
+            
+            <label for="discord">Discord-naam</label>
+            <input type="text" id="discord" name="discord" required placeholder="Jouw Discord-naam...">
+
+            <label for="phone">Telefoonnummer</label>
+            <input type="text" id="phone" name="phone" required placeholder="Jouw telefoonnummer...">
+
+            <label for="job">Kies een baan</label>
+            <select id="job" name="job" required>
+                <option value="politie">Politie</option>
+                <option value="ambulance">Ambulance</option>
+                <option value="pechhulp">Pechhulp</option>
+            </select>
+
+            <label for="motivation">Motivatie</label>
+            <textarea id="motivation" name="motivation" rows="4" required placeholder="Jouw motivatie..."></textarea>
+
+            <button type="submit">Verstuur sollicitatie</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("jobApplicationForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const discord = document.getElementById("discord").value;
+            const phone = document.getElementById("phone").value;
+            const job = document.getElementById("job").value;
+            const motivation = document.getElementById("motivation").value;
+
+            // Voeg een tag toe op basis van de gekozen baan
+            let jobTag = "";
+            if (job === "politie") {
+                jobTag = "<@&POLITIE_ROLE_ID>";  // Vervang met de echte rol-ID voor politie
+            } else if (job === "ambulance") {
+                jobTag = "<@&AMBULANCE_ROLE_ID>"; // Vervang met de echte rol-ID voor ambulance
+            } else if (job === "pechhulp") {
+                jobTag = "<@&PECHHULP_ROLE_ID>";  // Vervang met de echte rol-ID voor pechhulp
+            }
+
+            const webhookURL = "https://discord.com/api/webhooks/1314365842451857568/Qh1uWL-hRX1DpQup2m3f7vGlkf9Qeav5k423DgbjbHKnZQdD-7NDoRho199o6CrNM2Jd"; // Vervang met jouw Discord webhook URL
+
+            // Maak het bericht voor de webhook
+            const message = {
+                content: jobTag,
+                embeds: [{
+                    title: "Nieuwe sollicitatie",
+                    fields: [
+                        { name: "Naam", value: name, inline: true },
+                        { name: "Discord-naam", value: discord, inline: true },
+                        { name: "Telefoonnummer", value: phone, inline: true },
+                        { name: "Gekozen baan", value: job, inline: true },
+                        { name: "Motivatie", value: motivation, inline: false }
+                    ],
+                    color: 0x00ff00 // Groen kleurschema voor de embed
+                }]
+            };
+
+            // Verzend de sollicitatie naar de Discord webhook
+            fetch(webhookURL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(message)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Sollicitatie succesvol verzonden!");
+                    document.getElementById("jobApplicationForm").reset(); // Formulier resetten
+                } else {
+                    alert("Er is een fout opgetreden bij het verzenden van de sollicitatie.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Er is een fout opgetreden bij het verzenden van de sollicitatie.");
+            });
+        });
+    </script>
+
+</body>
+</html>

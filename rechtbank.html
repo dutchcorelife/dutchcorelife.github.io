@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rechtbank Agenda</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+            padding: 10px;
+            background-color: #e7f3fe;
+            border-radius: 5px;
+        }
+        .copy-text {
+            margin-top: 20px;
+            background-color: #e7f3fe;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap; /* Zorgt ervoor dat nieuwe regels zichtbaar zijn */
+        }
+        .home-button {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background-color: #ffffff;
+            color: #35424a;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .home-button:hover {
+            background-color: #45a049;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1></h1>
+        <a href="index.html" class="home-button">Home</a>
+    </header>
+    <div class="container">
+        <h2>Rechtbank Agenda</h2>
+        
+        <!-- Input velden voor de agenda -->
+        <input type="text" id="naam" placeholder="Naam" required>
+        <input type="date" id="datum" required>
+        <input type="text" id="discordId" placeholder="Discord ID" required>
+        <button id="addButton">Toevoegen aan Agenda</button>
+        
+        <!-- Lijst voor de agenda -->
+        <h3>Huidige Agenda</h3>
+        <ul id="agendaList"></ul>
+
+        <!-- Knop om agenda naar Discord te sturen -->
+        <button id="sendDiscordButton">Verstuur Agenda naar Discord</button>
+        
+        <!-- Kopieerbare tekstweergave -->
+        <h3>Kopieerbare Data</h3>
+        <div class="copy-text" id="copyText"></div>
+        <button id="copyButton">Kopieer Agenda Data</button>
+    </div>
+
+    <script>
+        const agenda = [
+            { naam: 'Thomas', datum: '29-09-2024', discordId: '425750472649998340' },
+            { naam: 'Piet Pietersen', datum: '2024-10-02', discordId: '706452011738202202' },
+            // Voeg hier meer agenda-items toe in dezelfde structuur
+        ];
+
+        // Functie om de agenda bij te werken in de UI
+        function updateAgendaList() {
+            const agendaList = document.getElementById('agendaList');
+            const copyText = document.getElementById('copyText');
+            agendaList.innerHTML = ''; // Maak de lijst leeg
+            let textToCopy = '📅 **Rechtbank Agenda**\n\n';
+            agenda.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `${item.naam} - Datum: ${item.datum} (Discord: <@${item.discordId}>)`;
+                agendaList.appendChild(li);
+                textToCopy += `${item.naam} - Datum: ${item.datum} (Discord: ${item.discordId})\n`;
+            });
+            copyText.textContent = textToCopy; // Update de kopieerbare tekst
+        }
+
+        // Event listener voor het toevoegen van een agenda-item
+        document.getElementById('addButton').addEventListener('click', () => {
+            const naam = document.getElementById('naam').value;
+            const datum = document.getElementById('datum').value;
+            const discordId = document.getElementById('discordId').value;
+
+            if (naam && datum && discordId) {
+                agenda.push({ naam, datum, discordId });
+                updateAgendaList();
+                
+                // Reset de invoervelden
+                document.getElementById('naam').value = '';
+                document.getElementById('datum').value = '';
+                document.getElementById('discordId').value = '';
+            } else {
+                alert('Vul alstublieft alle velden in!');
+            }
+        });
+
+        // Event listener voor het versturen van de agenda naar Discord
+        document.getElementById('sendDiscordButton').addEventListener('click', async () => {
+            if (agenda.length === 0) {
+                alert('De agenda is leeg!');
+                return;
+            }
+
+            // Maak een bericht voor Discord
+            let message = '📅 **Rechtbank Agenda**\n\n';
+            agenda.forEach(item => {
+                message += `${item.naam} - Datum: ${item.datum} (Discord: <@${item.discordId}>)\n`;
+            });
+
+            // Verstuur het bericht naar de Discord-webhook
+            const webhookURL = 'https://discord.com/api/webhooks/1314365842451857568/Qh1uWL-hRX1DpQup2m3f7vGlkf9Qeav5k423DgbjbHKnZQdD-7NDoRho199o6CrNM2Jd'; // Vervang dit door jouw webhook URL
+            
+            try {
+                const response = await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ content: message }),
+                });
+
+                if (response.ok) {
+                    alert('Agenda succesvol verzonden naar Discord!');
+                } else {
+                    alert('Er is een fout opgetreden bij het verzenden naar Discord.');
+                }
+            } catch (error) {
+                console.error('Fout bij het verzenden naar Discord:', error);
+            }
+        });
+
+        // Event listener voor het kopiëren van de agenda data
+        document.getElementById('copyButton').addEventListener('click', () => {
+            const copyText = document.getElementById('copyText').textContent;
+            navigator.clipboard.writeText(copyText).then(() => {
+                alert('Agenda data gekopieerd naar klembord!');
+            }).catch(err => {
+                console.error('Fout bij het kopiëren:', err);
+            });
+        });
+
+        // Initieel de agenda weergeven
+        updateAgendaList();
+    </script>
+</body>
+</html>

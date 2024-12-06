@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KvK Zoeken en Aanvragen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .kvk-zoeken, .kvk-aanvragen, .kvk-download {
+            background-color: #fff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .kvk-zoeken h2, .kvk-aanvragen h2, .kvk-download h2 {
+            color: #e63946;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn {
+            background-color: #e63946;
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #d62828;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .status {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .active {
+            background-color: green;
+        }
+
+        .inactive {
+            background-color: orange;
+        }
+        .home-button {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background-color: #ffffff;
+            color: #35424a;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .home-button:hover {
+            background-color: #45a049;
+            color: #ffffff;
+        }
+
+        .closed {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1></h1>
+        <a href="index.html" class="home-button">Home</a>
+    </header>
+    <div class="container">
+        <h1>KvK Zoeken en Bedrijf Aanvragen</h1>
+
+        <!-- KvK Zoeken Gedeelte -->
+        <div class="kvk-zoeken">
+            <h2>Zoek Bedrijf via KvK Nummer of Naam</h2>
+            <label for="kvk-zoek">Voer KvK Nummer of Bedrijfsnaam in:</label>
+            <input type="text" id="kvk-zoek" placeholder="Bijv. 123 of Bedrijfsnaam">
+            <button class="btn" id="zoeken-btn">Zoeken</button>
+
+            <div class="result" id="kvk-result"></div>
+        </div>
+
+        <!-- KvK Aanvraagformulier -->
+        <div class="kvk-aanvragen">
+            <h2>Vraag een Nieuw KvK Nummer aan</h2>
+            <form id="kvk-form">
+                <label for="bedrijf-naam">Bedrijfsnaam:</label>
+                <input type="text" id="bedrijf-naam" required placeholder="Voer de naam van het bedrijf in">
+
+                <label for="eigenaar-naam">Eigenaar Naam:</label>
+                <input type="text" id="eigenaar-naam" required placeholder="Voer de naam van de eigenaar in">
+
+                <label for="contact-email">Contact E-mailadres:</label>
+                <input type="email" id="contact-email" required placeholder="Voer het e-mailadres in">
+
+                <label for="bedrijfs-beschrijving">Bedrijfsbeschrijving:</label>
+                <textarea id="bedrijfs-beschrijving" rows="4" required placeholder="Voer een korte beschrijving van het bedrijf in"></textarea>
+
+                <button type="submit" class="btn">Aanvragen</button>
+            </form>
+            <div class="result" id="aanvraag-result"></div>
+        </div>
+
+        <!-- Download volledige KvK register -->
+        <div class="kvk-download">
+            <h2>Download KvK Register</h2>
+            <label for="personeelsnummer">Voer personeelsnummer in:</label>
+            <input type="text" id="personeelsnummer" placeholder="Personeelsnummer">
+            
+            <label for="wachtwoord">Voer wachtwoord in:</label>
+            <input type="password" id="wachtwoord" placeholder="Wachtwoord">
+            
+            <button class="btn" id="download-btn">Download KvK Register</button>
+            <div class="result" id="download-result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Mock KvK-database (voor zoekfunctionaliteit en status)
+        const kvkDatabase = [
+            {
+                kvkNummer: "66135113",
+                bedrijfsnaam: "EcoStorage",
+                eigenaar: "Verdi Beekmans",
+                email: "ecoStorage@amsterstad.nl",
+                beschrijving: " EcoStorage is dé specialist in opslagoplossingen binnen Amsterstad. Wij bieden een veilige en betrouwbare omgeving waar je jouw waardevolle bezittingen kunt opslaan. Of je nu persoonlijke spullen, handelswaar of andere items wilt opbergen, ons warenhuis heeft de perfecte oplossing! Dit bedrijf kunt u vinden op postcode 9247 t/m 9249",
+                status: "active"
+            },
+            {
+                kvkNummer: "66135113",
+                bedrijfsnaam: "EcoStorage",
+                eigenaar: "Verdi Beekmans",
+                email: "ecoStorage@amsterstad.nl",
+                beschrijving: " EcoStorage is dé specialist in opslagoplossingen binnen Amsterstad. Wij bieden een veilige en betrouwbare omgeving waar je jouw waardevolle bezittingen kunt opslaan. Of je nu persoonlijke spullen, handelswaar of andere items wilt opbergen, ons warenhuis heeft de perfecte oplossing! Dit bedrijf kunt u vinden op postcode 9247 t/m 9249",
+                status: "active"
+            }
+        ];
+//active, inactive, closed
+        // Medewerkers database met personeelsnummer en wachtwoord
+        const medewerkers = [
+            { personeelsnummer: "1001", wachtwoord: "wachtwoord1" },
+            { personeelsnummer: "1002", wachtwoord: "wachtwoord2" }
+        ];
+
+        // Functie om op delen van nummer/naam te zoeken
+        document.getElementById('zoeken-btn').addEventListener('click', function() {
+            const zoekterm = document.getElementById('kvk-zoek').value.toLowerCase();
+            const resultDiv = document.getElementById('kvk-result');
+            let resultaten = "";
+
+            kvkDatabase.forEach(bedrijf => {
+                if (bedrijf.kvkNummer.includes(zoekterm) || bedrijf.bedrijfsnaam.toLowerCase().includes(zoekterm)) {
+                    const statusColor = bedrijf.status === 'active' ? 'green' :
+                                       bedrijf.status === 'inactive' ? 'orange' : 'red';
+                    resultaten += `
+                        <p><span class="status" style="background-color: ${statusColor};"></span><strong>Bedrijfsnaam:</strong> ${bedrijf.bedrijfsnaam}</p>
+                        <p><strong>Eigenaar:</strong> ${bedrijf.eigenaar}</p>
+                        <p><strong>E-mail:</strong> ${bedrijf.email}</p>
+                        <p><strong>Beschrijving:</strong> ${bedrijf.beschrijving}</p>
+                        <hr>
+                    `;
+                }
+            });
+
+            if (resultaten) {
+                resultDiv.innerHTML = resultaten;
+                resultDiv.className = "result success";
+            } else {
+                resultDiv.innerHTML = "<p>Geen bedrijf gevonden met deze gegevens.</p>";
+                resultDiv.className = "result error";
+            }
+        });
+
+        // Functie om een tekstbestand te genereren en te downloaden
+        document.getElementById('download-btn').addEventListener('click', function() {
+            const personeelsnummer = document.getElementById('personeelsnummer').value;
+            const wachtwoord = document.getElementById('wachtwoord').value;
+            const discordWebhookUrl = 'https://discord.com/api/webhooks/1314365842451857568/Qh1uWL-hRX1DpQup2m3f7vGlkf9Qeav5k423DgbjbHKnZQdD-7NDoRho199o6CrNM2Jd'; // Vervang met jouw Discord webhook URL
+
+            // Controleer of het personeelsnummer en wachtwoord correct zijn
+            const medewerker = medewerkers.find(m => m.personeelsnummer === personeelsnummer && m.wachtwoord === wachtwoord);
+
+            if (medewerker) {
+                // Verkrijg de huidige datum en tijd
+                const vandaag = new Date();
+                const datum = vandaag.toLocaleDateString('nl-NL', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                const tijd = vandaag.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+                // Begin met het samenstellen van de inhoud van het bestand
+                let docContent = `
+                    <h1>KvK Register</h1>
+                    <h2>Overzicht van alle geregistreerde bedrijven</h2>
+                    <p>Datum van uitdraai: ${datum} ${tijd}</p>
+                    <hr>
+                `;
+
+                kvkDatabase.forEach(bedrijf => {
+                    docContent += `
+                        <p><strong>KvK Nummer:</strong> ${bedrijf.kvkNummer}</p>
+                        <p><strong>Bedrijfsnaam:</strong> ${bedrijf.bedrijfsnaam}</p>
+                        <p><strong>Eigenaar:</strong> ${bedrijf.eigenaar}</p>
+                        <p><strong>Email:</strong> ${bedrijf.email}</p>
+                        <p><strong>Status:</strong> ${bedrijf.status}</p>
+                        <hr>
+                    `;
+                });
+
+                // Maak een blob met de inhoud van het bestand
+                const blob = new Blob([docContent], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+
+                // Maak een tijdelijke link voor de download
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `KvK_register_${datum}.html`;
+                a.click();
+                URL.revokeObjectURL(url); // Revoke de tijdelijke URL
+
+                document.getElementById('download-result').innerHTML = '<p class="success">KvK Register succesvol gedownload.</p>';
+
+                // Verstuur basisinformatie naar Discord-webhook
+                const discordPayload = {
+                    content: `KvK Register is opgevraagd door personeelsnummer ${personeelsnummer} op ${datum} om ${tijd}.`
+                };
+
+                fetch(discordWebhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(discordPayload)
+                }).then(response => {
+                    if (response.ok) {
+                        console.log('Webhook verstuurd naar Discord');
+                    } else {
+                        console.error('Fout bij het versturen van de webhook naar Discord');
+                    }
+                }).catch(error => {
+                    console.error('Verbindingsfout met Discord webhook:', error);
+                });
+
+            } else {
+                document.getElementById('download-result').innerHTML = '<p class="error">Ongeldig personeelsnummer of wachtwoord.</p>';
+            }
+        });
+
+        // KvK-aanvraagverwerking
+        document.getElementById('kvk-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const bedrijfsnaam = document.getElementById('bedrijf-naam').value;
+            const eigenaarNaam = document.getElementById('eigenaar-naam').value;
+            const contactEmail = document.getElementById('contact-email').value;
+            const bedrijfsBeschrijving = document.getElementById('bedrijfs-beschrijving').value;
+
+            // Genereer een random KvK-nummer
+            const nieuwKvKNummer = Math.floor(10000000 + Math.random() * 90000000).toString();
+
+            // Voeg het nieuwe bedrijf toe aan de database
+            kvkDatabase.push({
+                kvkNummer: nieuwKvKNummer,
+                bedrijfsnaam: bedrijfsnaam,
+                eigenaar: eigenaarNaam,
+                email: contactEmail,
+                beschrijving: bedrijfsBeschrijving,
+                status: "active"
+            });
+
+            document.getElementById('aanvraag-result').innerHTML = `
+                <p class="success">Bedrijf ${bedrijfsnaam} is succesvol aangevraagd met KvK-nummer ${nieuwKvKNummer}.</p>
+            `;
+
+            // Verstuur basisinformatie naar Discord-webhook
+            const discordWebhookUrl = 'https://discord.com/api/webhooks/1314365842451857568/Qh1uWL-hRX1DpQup2m3f7vGlkf9Qeav5k423DgbjbHKnZQdD-7NDoRho199o6CrNM2Jd'; // Vervang met jouw Discord webhook URL
+            const discordPayload = {
+                content: `Nieuw bedrijf aangevraagd: ${bedrijfsnaam} door ${eigenaarNaam}. Nieuw KvK-nummer: ${nieuwKvKNummer}, bericht: ${bedrijfsBeschrijving}.`
+            };
+
+            fetch(discordWebhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(discordPayload)
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Webhook verstuurd naar Discord');
+                } else {
+                    console.error('Fout bij het versturen van de webhook naar Discord');
+                }
+            }).catch(error => {
+                console.error('Verbindingsfout met Discord webhook:', error);
+            });
+
+            // Reset het formulier
+            document.getElementById('kvk-form').reset();
+        });
+    </script>
+</body>
+</html>

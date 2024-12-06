@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coördinatoren Schema</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            margin-top: 20px;
+        }
+        .role-title {
+            color: #3498db;
+        }
+        .discord-profile {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .discord-profile img {
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .discord-profile a {
+            text-decoration: none;
+            color: #3498db;
+        }
+        .discord-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            margin-top: 20px;
+        }
+        .go-to-staff-btn-container {
+            text-align: right; /* Zorgt ervoor dat de knop rechts uitgelijnd wordt */
+            margin-top: 20px;
+        }
+    
+        .go-to-staff-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    
+        .go-to-staff-btn:hover {
+            background-color: #2980b9;
+        }
+        .home-button {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background-color: #ffffff;
+            color: #35424a;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .home-button:hover {
+            background-color: #45a049;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Coördinatoren Schema</h1>
+        <a href="index.html" class="home-button">Home</a>
+    </header>
+
+    <div class="go-to-staff-btn-container">
+        <a href="staffsol.html">
+            <button class="go-to-staff-btn">Ga naar Staff Sollicitaties</button>
+        </a>
+    </div>
+    
+    <div class="container">
+        <h2>Overzicht</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rol</th>
+                    <th>Beschrijving</th>
+                    <th>Verantwoordelijkheden</th>
+                    <th>Discord</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="role-title">Staff Coördinator</td>
+                    <td>Beheert het moderatorteam en zorgt dat regels worden nageleefd.</td>
+                    <td>
+                        <ul>
+                            <li>Leiden en coachen van staffleden</li>
+                            <li>Organiseren van staffvergaderingen</li>
+                            <li>Toezicht houden op naleving van serverregels en toezicht op staffleden</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <div class="discord-profile">
+                            <img src="https://cdn.discordapp.com/attachments/1220087526535073917/1313253114664456253/Ontwerp_zonder_titel_4.png?ex=67541305&is=6752c185&hm=62be432213ae80f2855c3f367f6a545ab4b240a6b1d6adaf787695892a7860d1&" alt="Staff Avatar" width="40">
+                            <!-- <a href="https://discord.com/users/USER_ID" target="_blank">Discord Profiel</a> -->
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="role-title">Onderwereld Coördinator</td>
+                    <td>Coördineert alle illegale activiteiten en RP binnen de onderwereld.</td>
+                    <td>
+                        <ul>
+                            <li>Ontwikkelen en beheren van criminele bedrijven</li>
+                            <li>Balans houden tussen criminele en legale gameplay</li>
+                            <li>Contact met factieleiders</li>
+                            <li>Rekening laten houden met het concept</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <div class="discord-profile">
+                            <img src="https://cdn.discordapp.com/attachments/1220087526535073917/1313253114664456253/Ontwerp_zonder_titel_4.png?ex=67541305&is=6752c185&hm=62be432213ae80f2855c3f367f6a545ab4b240a6b1d6adaf787695892a7860d1&" alt="Onderwereld Avatar" width="40">
+                            <!-- <a href="https://discord.com/users/USER_ID" target="_blank">Discord Profiel</a> -->
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="role-title">Hulpdiensten Coördinator</td>
+                    <td>Coördineert politie, ambulance en brandweer.</td>
+                    <td>
+                        <ul>
+                            <li>Begeleiding hulpdiensten vanuit het ministerie</li>
+                            <li>Uitvoeren van trainingen</li>
+                            <li>Opstellen operationele protocollen voor trainingen</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <div class="discord-profile">
+                            <img src="https://cdn.discordapp.com/attachments/1220087526535073917/1313253114664456253/Ontwerp_zonder_titel_4.png?ex=67541305&is=6752c185&hm=62be432213ae80f2855c3f367f6a545ab4b240a6b1d6adaf787695892a7860d1&" alt="Hulpdiensten Avatar" width="40">
+                            <!-- <a href="https://discord.com/users/USER_ID" target="_blank">Discord Profiel</a> -->
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="role-title">Voorzitter Gemeenteraad</td>
+                    <td>Leidt de gemeenteraadsvergaderingen en beheert stadszaken.</td>
+                    <td>
+                        <ul>
+                            <li>Voorbereiden en leiden van vergaderingen</li>
+                            <li>Contact met burgerprojecten</li>
+                            <li>Wetsvoorstellen beheren</li>
+                            <li>Een oogje op het beheer houden</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <div class="discord-profile">
+                            <img src="https://cdn.discordapp.com/attachments/1220087526535073917/1313253114664456253/Ontwerp_zonder_titel_4.png?ex=67541305&is=6752c185&hm=62be432213ae80f2855c3f367f6a545ab4b240a6b1d6adaf787695892a7860d1&" alt="Voorzitter Avatar" width="40">
+                            <!-- <a href="https://discord.com/users/USER_ID" target="_blank">Discord Profiel</a> -->
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="role-title">Ticket Coördinator</td>
+                    <td>Beheert het ticketsysteem en zorgt voor snelle oplossingen.</td>
+                    <td>
+                        <ul>
+                            <li>Verdelen van support-tickets</li>
+                            <li>Rapporteren van veelvoorkomende problemen</li>
+                            <li>Teamleden ondersteunen</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <div class="discord-profile">
+                            <img src="https://cdn.discordapp.com/attachments/1220087526535073917/1313253114664456253/Ontwerp_zonder_titel_4.png?ex=67541305&is=6752c185&hm=62be432213ae80f2855c3f367f6a545ab4b240a6b1d6adaf787695892a7860d1&" alt="Ticket Coördinator Avatar" width="40">
+                            <!-- <a href="https://discord.com/users/1130102733798658058" target="_blank">Discord Profiel</a> -->
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="role-title">Unban/Refund Coördinator</td>
+                    <td>Beheert verzoeken voor unbans en refunds.</td>
+                    <td>
+                        <ul>
+                            <li>Analyseren van unban-aanvragen</li>
+                            <li>Oplossen van refundverzoeken</li>
+                            <li>Unbannen van spelers</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <div class="discord-profile">
+                            <img src="https://cdn.discordapp.com/attachments/1220087526535073917/1313253114664456253/Ontwerp_zonder_titel_4.png?ex=67541305&is=6752c185&hm=62be432213ae80f2855c3f367f6a545ab4b240a6b1d6adaf787695892a7860d1&" alt="Unban Avatar" width="40">
+                            <!-- <a href="https://discord.com/users/USER_ID" target="_blank">Discord Profiel</a> -->
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="role-title">Coordinator voor informatie</td>
+                    <td>Beheert verzoeken voor informatie.</td>
+                    <td>
+                        <ul>
+                            <li>Verschaft de informatie aan burgers</li>
+                            <li>zorgt voor nieuwsberichten</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <div class="discord-profile">
+                            <img src="https://cdn.discordapp.com/attachments/1220087526535073917/1313253114664456253/Ontwerp_zonder_titel_4.png?ex=67541305&is=6752c185&hm=62be432213ae80f2855c3f367f6a545ab4b240a6b1d6adaf787695892a7860d1&" alt="Unban Avatar" width="40">
+                            <!-- <a href="https://discord.com/users/USER_ID" target="_blank">Discord Profiel</a> -->
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="container">
+        <h2>Algemene Regels</h2>
+        <ul>
+            <li>Staffleden dienen altijd een professionele houding te behouden, zowel in-game als in Discord.</li>
+            <li>Wees respectvol naar alle spelers, ongeacht de situatie.</li>
+            <li>Het misbruiken van staffrechten, zoals teleporteren, godmode of andere tools, is <span class="highlight">strikt verboden</span>.</li>
+            <li>Blijf neutraal in conflicten en probeer deze op een eerlijke manier op te lossen.</li>
+            <li>Vertrouwelijke informatie binnen de staffgroep mag niet gedeeld worden met anderen.</li>
+        </ul>
+
+        <h2>In-Game Regels</h2>
+        <ul>
+            <li>Gebruik staffrechten alleen wanneer dit nodig is om een situatie op te lossen.</li>
+            <li>Voer je stafftaken uit zonder de immersie van andere spelers te verstoren.</li>
+            <li>Als je een situatie onderzoekt, zorg er dan voor dat je onzichtbaar bent indien mogelijk.</li>
+            <li>Neem geen deel aan roleplay als je op dat moment in je staffrol bent.</li>
+        </ul>
+
+        <h2>Communicatie Regels</h2>
+        <ul>
+            <li>Blijf actief communiceren in de staffkanalen op Discord.</li>
+            <li>Rapporteer onopgeloste problemen of klachten aan de Staff Coördinator.</li>
+            <li>Gebruik de juiste kanalen voor het melden van bugs, suggesties of conflicten.</li>
+            <li>Behoud altijd een vriendelijke en geduldige toon tijdens communicatie met spelers.</li>
+        </ul>
+
+        <h2>Belangrijke Notities</h2>
+        <ul>
+            <li>Alle staffleden worden geacht actief te blijven. Meld het bij de Staff Coördinator als je tijdelijk niet beschikbaar bent.</li>
+            <li>Wees een voorbeeld voor andere spelers in de server.</li>
+            <li>Schending van deze regels kan leiden tot disciplinaire maatregelen.</li>
+        </ul>
+
+        <h2>Regels voor coordinatoren en/of overheid en/of onderwereld</h2>
+        <ul>
+            <li>Staffleden mogen geen ticket over zichzelf behandelen.</li>
+            <li>Coordinatoren mogen het ticket niet behandelen als de klacht over zijn of haar eigen gang, bedrijf ect gaat. Deze klacht wordt dan behandeld door een combinatie van de voorzitter, beheer en medebeheer.</li>
+            <li>Schending van deze regels is direct ontslag van de functie.</li>
+        </ul>
+    </div>
+
+    <footer>
+        <h2>Discord Server</h2>
+        <iframe src="https://discord.com/widget?id=1220087525218062487&theme=dark" allowtransparency="true"></iframe>
+    </footer>
+</body>
+</html>
